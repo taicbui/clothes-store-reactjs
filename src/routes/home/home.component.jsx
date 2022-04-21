@@ -1,42 +1,42 @@
-import Directory from './../../components/directory/directory.component'
+import { Outlet } from 'react-router-dom';
 
-
+import Directory from '../../components/directory/directory.component';
 
 const Home = () => {
-    const categories = [
-      {
-        id: 1,
-        title: "iPhone",
-        imageUrl: 'https://images.pexels.com/photos/8066715/pexels-photo-8066715.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-      {
-        id: 2,
-        title: "iPad",
-        imageUrl: 'https://images.pexels.com/photos/3944392/pexels-photo-3944392.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-      {
-        id: 3,
-        title: "Mac",
-        imageUrl: 'https://images.pexels.com/photos/331684/pexels-photo-331684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-      {
-        id: 4,
-        title: "Apple Watch",
-        imageUrl: 'https://images.pexels.com/photos/393047/pexels-photo-393047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-      {
-        id: 5,
-        title: "AirPods",
-        imageUrl: 'https://images.pexels.com/photos/4812934/pexels-photo-4812934.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-      {
-        id: 6,
-        title: "Accessories",
-        imageUrl: 'https://images.pexels.com/photos/205316/pexels-photo-205316.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-      },
-    ]
-  
-    return <Directory categories={categories} />;
-  };
-  
-  export default Home;
+  const categories = [
+    {
+      id: 1,
+      title: 'hats',
+      imageUrl: 'https://i.ibb.co/cvpntL1/hats.png',
+    },
+    {
+      id: 2,
+      title: 'jackets',
+      imageUrl: 'https://i.ibb.co/px2tCc3/jackets.png',
+    },
+    {
+      id: 3,
+      title: 'sneakers',
+      imageUrl: 'https://i.ibb.co/0jqHpnp/sneakers.png',
+    },
+    {
+      id: 4,
+      title: 'womens',
+      imageUrl: 'https://i.ibb.co/GCCdy8t/womens.png',
+    },
+    {
+      id: 5,
+      title: 'mens',
+      imageUrl: 'https://i.ibb.co/R70vBrQ/men.png',
+    },
+  ];
+
+  return (
+    <div>
+      <Directory categories={categories} />
+      <Outlet />
+    </div>
+  );
+};
+
+export default Home;
