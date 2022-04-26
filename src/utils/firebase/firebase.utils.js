@@ -1,15 +1,26 @@
-import { initializeApp } from 'firebase/app';      // create an instance of firebase
+import { initializeApp } from 'firebase/app';
 import {
-  getAuth,                              // Firebase Authentication JS SDK
-  signInWithRedirect,                   // Sign in being redirected to another page 
-  signInWithPopup,                      // Sign in with a pop up
-  GoogleAuthProvider,                   // Import Google Provider
-  createUserWithEmailAndPassword,       // Create user with email and password
-  signInWithEmailAndPassword,           // Sign in with email and password
-  signOut,                              // Sign out
-  onAuthStateChanged,                   // Observer to state changed
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';     // To manipulate firestore database
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from 'firebase/firestore';
+
+import SHOP_DATA from '../../shop-data';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDwATEHxMW00am02mknls6oWdQLXmWPeuc",
@@ -17,26 +28,64 @@ const firebaseConfig = {
   projectId: "shopdunk-reactjs-ver1",
   storageBucket: "shopdunk-reactjs-ver1.appspot.com",
   messagingSenderId: "631316016514",
-  appId: "1:631316016514:web:776f3090371772df33339b"
+  appId: "1:631316016514:web:776f3090371772df33339b",
+
+  // apiKey: 'AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk',
+  // authDomain: 'crwn-clothing-db-98d4d.firebaseapp.com',
+  // projectId: 'crwn-clothing-db-98d4d',
+  // storageBucket: 'crwn-clothing-db-98d4d.appspot.com',
+  // messagingSenderId: '626766232035',
+  // appId: '1:626766232035:web:506621582dab103a4d08d6',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);                       // Connect to firebase
+const firebaseApp = initializeApp(firebaseConfig);
 
-const googleProvider = new GoogleAuthProvider();                         // instantiate the Google provider
+const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
 export const auth = getAuth();
-
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
-  
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-export const db = getFirestore(firebaseApp);
+export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  field
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+addCollectionAndDocuments('categories', SHOP_DATA)
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
 
 export const createUserDocumentFromAuth = async (
   userAuth,

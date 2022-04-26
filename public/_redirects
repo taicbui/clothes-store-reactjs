@@ -1,0 +1,2 @@
+# Redirects from what the browser requests to what we serve. For Netify only
+/*    /index.html   200
