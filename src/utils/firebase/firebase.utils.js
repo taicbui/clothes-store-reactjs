@@ -1,13 +1,15 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';      // create an instance of firebase
 import {
-  getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  getAuth,                              // Firebase Authentication JS SDK
+  signInWithRedirect,                   // Sign in being redirected to another page 
+  signInWithPopup,                      // Sign in with a pop up
+  GoogleAuthProvider,                   // Import Google Provider
+  createUserWithEmailAndPassword,       // Create user with email and password
+  signInWithEmailAndPassword,           // Sign in with email and password
+  signOut,                              // Sign out
+  onAuthStateChanged,                   // Observer to state changed
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';     // To manipulate firestore database
 
 const firebaseConfig = {
   apiKey: "AIzaSyDwATEHxMW00am02mknls6oWdQLXmWPeuc",
@@ -18,21 +20,23 @@ const firebaseConfig = {
   appId: "1:631316016514:web:776f3090371772df33339b"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);                       // Connect to firebase
 
-const googleProvider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();                         // instantiate the Google provider
 
 googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
 export const auth = getAuth();
+
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
+  
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-export const db = getFirestore();
+export const db = getFirestore(firebaseApp);
 
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -74,3 +78,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
