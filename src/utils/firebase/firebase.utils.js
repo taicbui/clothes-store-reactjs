@@ -68,7 +68,6 @@ export const addCollectionAndDocuments = async (
   });
 
   await batch.commit();
-  console.log('done');
 };
 
 addCollectionAndDocuments('categories', SHOP_DATA)

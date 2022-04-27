@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+
+
+// Style for the parent container
 export const CheckoutItemContainer = styled.div`
   width: 100%;
   display: flex;
@@ -10,8 +13,10 @@ export const CheckoutItemContainer = styled.div`
   align-items: center;
 `;
 
+
+// Style for the image container
 export const ImageContainer = styled.div`
-  width: 23%;
+  width: 22%;
   padding-right: 15px;
 
   img {
@@ -20,23 +25,33 @@ export const ImageContainer = styled.div`
   }
 `;
 
+
+// Style for span of each collumn
 export const BaseSpan = styled.span`
   width: 23%;
 `;
 
+
+// Style for quantity
 export const Quantity = styled(BaseSpan)`
   display: flex;
 `;
 
+
+// Style for arrow increase/decrease
 export const Arrow = styled.div`
   cursor: pointer;
 `;
 
+
+// Style for quantity number
 export const Value = styled.span`
   margin: 0 10px;
 `;
 
+
+// Style for remove button
 export const RemoveButton = styled.div`
-  padding-left: 12px;
+  padding-left: 1px;
   cursor: pointer;
 `;

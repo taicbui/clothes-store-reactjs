@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+
+
+// Style for directory (homepage)
 export const DirectoryContainer = styled.div`
   width: 100%;
   display: flex;

@@ -9,6 +9,8 @@ const shrinkLabelStyles = css`
   color: ${mainColor};
 `;
 
+
+/* Style for input label */
 export const FormInputLabel = styled.label`
   color: ${subColor};
   font-size: 16px;
@@ -21,6 +23,8 @@ export const FormInputLabel = styled.label`
   ${({ shrink }) => shrink && shrinkLabelStyles};
 `;
 
+
+/* Style for input field */
 export const Input = styled.input`
   background: none;
   background-color: white;
@@ -43,6 +47,8 @@ export const Input = styled.input`
   }
 `;
 
+
+/* Style for the parent div of each form */
 export const Group = styled.div`
   position: relative;
   margin: 45px 0;

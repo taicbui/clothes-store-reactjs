@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+
+
+// Style for directory's item's  background image
 export const BackgroundImage = styled.div`
   width: 100%;
   height: 100%;
@@ -8,6 +11,8 @@ export const BackgroundImage = styled.div`
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 `;
 
+
+// Style for "Shop Now" section
 export const Body = styled.div`
   height: 90px;
   padding: 0 25px;
@@ -34,6 +39,8 @@ export const Body = styled.div`
   }
 `;
 
+
+// Style for directory item container
 export const DirectoryItemContainer = styled.div`
   min-width: 30%;
   height: 240px;

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CartContext } from '../../contexts/cart.context';
@@ -13,15 +13,20 @@ import {
 } from './cart-dropdown.styles';
 
 const CartDropdown = () => {
-  const { cartItems } = useContext(CartContext);
+  const cartDropdownRef = useRef()
+  const { cartItems, clickRef, setClickRef } = useContext(CartContext);
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
     navigate('/checkout');
   };
 
+  useEffect(()=>{
+    setClickRef(cartDropdownRef.current)
+  },[])
+
   return (
-    <CartDropdownContainer>
+    <CartDropdownContainer ref={cartDropdownRef}>
       <CartItems>
         {cartItems.length ? (
           cartItems.map((item) => <CartItem key={item.id} cartItem={item} />)

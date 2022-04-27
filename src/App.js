@@ -7,6 +7,7 @@ import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
 
 const App = () => {
+  
   return (
     <Routes>
       <Route path='/' element={<Navigation />}>

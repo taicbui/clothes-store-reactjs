@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+
+
+// Style for default button
 export const BaseButton = styled.button`
   min-width: 165px;
   width: auto;
@@ -25,6 +28,8 @@ export const BaseButton = styled.button`
   }
 `;
 
+
+// Style for Google sign-in button
 export const GoogleSignInButton = styled(BaseButton)`
   background-color: #4285f4;
   color: white;
@@ -35,6 +40,8 @@ export const GoogleSignInButton = styled(BaseButton)`
   }
 `;
 
+
+// Style for button 'add to cart'
 export const InvertedButton = styled(BaseButton)`
   background-color: white;
   color: black;

@@ -1,9 +1,13 @@
-import {
+// Import Button styled component
+import {  
   BaseButton,
   GoogleSignInButton,
   InvertedButton,
-} from './button.styles';
+} from './button.styles';                    
 
+
+
+// 'product-cart.component' and 'sign-in-form.component' will import these
 export const BUTTON_TYPE_CLASSES = {
   base: 'base',
   google: 'google-sign-in',
