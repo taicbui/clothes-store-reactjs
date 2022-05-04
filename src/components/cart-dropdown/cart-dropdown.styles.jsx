@@ -12,15 +12,15 @@ import {
 // Style for cart dropdown container
 export const CartDropdownContainer = styled.div`
   position: absolute;
-  width: 240px;
-  height: 340px;
+  width: 300px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   padding: 20px;
   border: 1px solid black;
   background-color: white;
-  top: 90px;
-  right: 40px;
+  top: 55px;
+  right: 42px;
   z-index: 5;
 
 
@@ -28,7 +28,8 @@ export const CartDropdownContainer = styled.div`
   ${BaseButton},
   ${GoogleSignInButton},
   ${InvertedButton} {
-    margin-top: auto;
+    margin-top: 10px;
+    margin-bottom: 0px;
   }
 `;
 

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+
+// Style for sign up container
 export const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;

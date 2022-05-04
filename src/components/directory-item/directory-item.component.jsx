@@ -1,11 +1,15 @@
+// Import navigate for onClick event 
 import { useNavigate } from 'react-router-dom';
 
+// Import styled-component 
 import {
   BackgroundImage,
   Body,
   DirectoryItemContainer,
 } from './directory-item.styles';
 
+
+// DirectoryItem will be imported by Directory component
 const DirectoryItem = ({ category }) => {
   const { imageUrl, title, route } = category;
   const navigate = useNavigate();

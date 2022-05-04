@@ -1,8 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components'; // import css to encapsulate some css inside a block that we can use as variables and inject into different components
 
+// Variables (JS variables instead of SASS variables)
 const subColor = 'grey';
 const mainColor = 'black';
 
+
+// CSS to be injected into components
 const shrinkLabelStyles = css`
   top: -14px;
   font-size: 12px;
@@ -20,7 +23,11 @@ export const FormInputLabel = styled.label`
   left: 5px;
   top: 10px;
   transition: 300ms ease all;
-  ${({ shrink }) => shrink && shrinkLabelStyles};
+
+  // an arrow function with AND operator. It will return the first falsy value or the last one if all of the values are true. This means this function will return shrinkLabelStyles if schrink is             ;
+  // 'schrink' is the props passed from form-input.component. We need to destructure props because it's passed as an object ;
+  ${({shrink}) => shrink && shrinkLabelStyles};  
+
 `;
 
 
@@ -42,6 +49,8 @@ export const Input = styled.input`
     outline: none;
   }
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_combinator
+  // When we focus, we want to find the nearest subsequent sibling of the 'FormInputLabel'. Anh we will put 'shrinkLabelStyles' in that 'FromInputLabel'. 
   &:focus ~ ${FormInputLabel} {
     ${shrinkLabelStyles};
   }

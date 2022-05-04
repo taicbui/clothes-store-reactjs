@@ -1,15 +1,20 @@
 import { useState } from 'react';
 
+// Import input form and button
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
+// Import push user data to Firebase authentication & Firestore
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
 
+
+// Import styled-component
 import { SignUpContainer } from './sign-up-form.styles';
 
+// This object will be default value for formFields state
 const defaultFormFields = {
   displayName: '',
   email: '',
@@ -17,14 +22,19 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 
+
+// This component will be imported and included by Authentication component
 const SignUpForm = () => {
+
+  // Setup for formFields state
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
+
+  // Action to take when we submit sign-up form
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -50,11 +60,18 @@ const SignUpForm = () => {
     }
   };
 
+
+
+  // Action to take we we type in input field
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormFields({ ...formFields, [name]: value });
   };
+
+
+
+
 
   return (
     <SignUpContainer>

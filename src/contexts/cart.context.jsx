@@ -1,10 +1,15 @@
 import { createContext, useState, useEffect } from 'react';
 
+
+
 const addCartItem = (cartItems, productToAdd) => {
+
+  // If the item we want to add to cart already exists, 'existingCartItem' will return true
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id
   );
 
+  // If 'existingCartItem' is true, we will run this
   if (existingCartItem) {
     return cartItems.map((cartItem) =>
       cartItem.id === productToAdd.id
@@ -13,9 +18,15 @@ const addCartItem = (cartItems, productToAdd) => {
     );
   }
 
+  // If 'existingCartItem' is false, we will run this
   return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
+
+
+
+
+// remove sigle item from cart
 const removeCartItem = (cartItems, cartItemToRemove) => {
   // find the cart item to remove
   const existingCartItem = cartItems.find(
@@ -35,9 +46,16 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
   );
 };
 
+
+// Remove a product from cart
 const clearCartItem = (cartItems, cartItemToClear) =>
   cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
 
+
+
+
+
+// Cart context and its default value
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
@@ -49,13 +67,20 @@ export const CartContext = createContext({
   cartTotal: 0,
 });
 
+
+
+
+
 export const CartProvider = ({ children }) => {
+
+  // cart related states
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [clickRef, setClickRef] = useState({});
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
+
+  // Whenever 'cartItems' changes, we recalculate the 'cartCount' bu adding all cartItem quantity together
   useEffect(() => {
     const newCartCount = cartItems.reduce(
       (total, cartItem) => total + cartItem.quantity,
@@ -64,51 +89,43 @@ export const CartProvider = ({ children }) => {
     setCartCount(newCartCount);
   }, [cartItems]);
 
+
+  // Whenever 'cartItems' changes, we recalculate the 'cartTotal' bu adding all cartItem price together
   useEffect(() => {
     const newCartTotal = cartItems.reduce(
       (total, cartItem) => total + cartItem.quantity * cartItem.price,
       0
     );
     setCartTotal(newCartTotal);
+
   }, [cartItems]);
 
 
-  useEffect( () => {
-    const checkIfClickedOutside = e => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
-      if(clickRef != {}){
-        if (isCartOpen && !clickRef.contains(e.target)) {
-          setIsCartOpen(false)
-        }
-
-      }
-    }
-
-    document.addEventListener("mousedown", checkIfClickedOutside)
-
-    return () => {
-      // Cleanup the event listener
-      document.removeEventListener("mousedown", checkIfClickedOutside)
-    }
-  }, [clickRef])
-
+  // Other component can call this function to add items to cart
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
 
+  
+  // Other component can call this function to remove items from cart
   const removeItemToCart = (cartItemToRemove) => {
     setCartItems(removeCartItem(cartItems, cartItemToRemove));
   };
 
+  // Other component can call this function to remove items from cart
   const clearItemFromCart = (cartItemToClear) => {
     setCartItems(clearCartItem(cartItems, cartItemToClear));
   };
 
+
+
+
+
+
+  // Value to be passed with context provider to other components
   const value = {
     isCartOpen,
     setIsCartOpen,
-    setClickRef,
     addItemToCart,
     removeItemToCart,
     clearItemFromCart,

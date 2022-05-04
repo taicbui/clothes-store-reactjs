@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const ProductCartContainer = styled.div`
+
+// Style for product card container
+export const ProductCardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -35,6 +37,9 @@ export const ProductCartContainer = styled.div`
   }
 `;
 
+
+
+// Style for product card's footer
 export const Footer = styled.div`
   width: 100%;
   height: 5%;
@@ -43,11 +48,15 @@ export const Footer = styled.div`
   font-size: 18px;
 `;
 
+
+// Style for product'name located on product car's footer
 export const Name = styled.span`
   width: 90%;
   margin-bottom: 15px;
 `;
 
+
+// Style for product'price located on product car's footer
 export const Price = styled.span`
   width: 10%;
 `;

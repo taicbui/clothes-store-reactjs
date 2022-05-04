@@ -7,13 +7,17 @@ import {
 
 
 
-// 'product-cart.component' and 'sign-in-form.component' will import these
+// Components will import these to determine what kind of buttons they need.
 export const BUTTON_TYPE_CLASSES = {
   base: 'base',
   google: 'google-sign-in',
   inverted: 'inverted',
 };
 
+
+
+
+// Get whatever button when we pass its type to this function as param
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
   ({
     [BUTTON_TYPE_CLASSES.base]: BaseButton,
@@ -21,6 +25,9 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
     [BUTTON_TYPE_CLASSES.inverted]: InvertedButton,
   }[buttonType]);
 
+
+
+// This is what other components, that need buttons such as sign-in, will import this. This function will return the needed button
 const Button = ({ children, buttonType, ...otherProps }) => {
   const CustomButton = getButton(buttonType);
   return <CustomButton {...otherProps}>{children}</CustomButton>;
