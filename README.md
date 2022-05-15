@@ -1,1 +1,1 @@
-## Phase two is improved version of phase one where some states have been managed by useReducer() hook. The rest is just the same as phase one.
+## In phase 3, we add Redux and Redux Middleware to the picture.
