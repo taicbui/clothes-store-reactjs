@@ -1,1 +1,1 @@
-## In phase 3, we add Redux and Redux Middleware to the picture.
+## In phase 3, we add Redux and Redux Middleware (thunk, saga, logger,...) to the picture.
