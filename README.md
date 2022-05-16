@@ -1,1 +1,1 @@
-## In phase 4, we add Stripe with Netlify serverless function.
+## In phase 5, we optimize our code with useCallback, useMemo, code splitting, dynamic import, suspense & lazy
