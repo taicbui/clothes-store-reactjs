@@ -1,10 +1,18 @@
-import { useContext } from 'react';
+// 'useSelector' hook is to access Redux store's states
+// 'useDispatch' is to send actions to reducers
+import { useSelector, useDispatch } from 'react-redux';
 
+// This selector will only select cart item states
+import { selectCartItems } from '../../store/cart/cart.selector';
 
-// Import CartContext, which contains cart related states: name, imageUrl, price and quantity
-import { CartContext } from '../../contexts/cart.context';
+// Actions to update cart items
+import {
+  addItemToCart,
+  clearItemFromCart,
+  removeItemFromCart,
+} from '../../store/cart/cart.action';
 
-// Import styled-component
+// Styled-components
 import {
   CheckoutItemContainer,
   ImageContainer,
@@ -16,23 +24,20 @@ import {
 } from './checkout-item.styles';
 
 
-// This component will be included in checkout component, which is checkout page
+// Our check-out item component
 const CheckoutItem = ({ cartItem }) => {
+  // This 'cartItem' prop is passed by checkout component
 
-  // Destructure the props to get all item's attributes
-  const { name, imageUrl, price, quantity } = cartItem;
+  const { name, imageUrl, price, quantity } = cartItem;        // Destructure the prop to get the item's data
 
-  // Get cart related states
-  const { clearItemFromCart, addItemToCart, removeItemToCart } = useContext(CartContext);
+  // Get cartItem states from Redux Store
+  const cartItems = useSelector(selectCartItems);
 
-  // Function to clear item from cart
-  const clearItemHandler = () => clearItemFromCart(cartItem);
-
-  // Function to add item to cart
-  const addItemHandler = () => addItemToCart(cartItem);
-
-  // Function to remove item from cart
-  const removeItemHandler = () => removeItemToCart(cartItem);
+  // Function to dispatch action to reducers to clear/add/remove items from cart.
+  const dispatch = useDispatch();
+  const clearItemHandler = () => dispatch(clearItemFromCart(cartItems, cartItem));
+  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
+  const removeItemHandler = () => dispatch(removeItemFromCart(cartItems, cartItem));
 
   return (
     <CheckoutItemContainer>
@@ -43,7 +48,7 @@ const CheckoutItem = ({ cartItem }) => {
       <Quantity>
         <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
         <Value>{quantity}</Value>
-        <Arrow onClick={addItemHandler}>&#10095;</Arrow> 
+        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
       </Quantity>
       <BaseSpan> {price}</BaseSpan>
       <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
@@ -51,6 +56,4 @@ const CheckoutItem = ({ cartItem }) => {
   );
 };
 
-
-// Will be imported by Checkout component
 export default CheckoutItem;

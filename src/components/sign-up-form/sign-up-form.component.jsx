@@ -1,20 +1,15 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-// Import input form and button
+// Components and styled-components
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-
-// Import push user data to Firebase authentication & Firestore
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from '../../utils/firebase/firebase.utils';
-
-
-// Import styled-component
 import { SignUpContainer } from './sign-up-form.styles';
 
-// This object will be default value for formFields state
+// action to sign up an user
+import { signUpStart } from '../../store/user/user.action';
+
+// fefault values for form fields to get input values for dispatch
 const defaultFormFields = {
   displayName: '',
   email: '',
@@ -23,18 +18,23 @@ const defaultFormFields = {
 };
 
 
-// This component will be imported and included by Authentication component
+// Our sign-up components
 const SignUpForm = () => {
 
-  // Setup for formFields state
+  // form fields states
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+
+  
+  const dispatch = useDispatch();
+
+  // function to reset form fields to default values
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-
-  // Action to take when we submit sign-up form
+  // Submit sign-up form
+  // Saga will listen to this
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -44,12 +44,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await createUserDocumentFromAuth(user, { displayName });
+      dispatch(signUpStart(email, password, displayName));
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -60,18 +55,12 @@ const SignUpForm = () => {
     }
   };
 
-
-
-  // Action to take we we type in input field
+  // function to capture input values
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormFields({ ...formFields, [name]: value });
   };
-
-
-
-
 
   return (
     <SignUpContainer>

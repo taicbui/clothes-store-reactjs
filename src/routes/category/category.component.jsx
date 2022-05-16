@@ -1,24 +1,36 @@
-import { useContext, useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+// Product category will contain multiple product cards under the same category
 import ProductCard from '../../components/product-card/product-card.component';
 
-import { CategoriesContext } from '../../contexts/categories.context';
+// Spinners works when the page is loading
+import Spinner from '../../components/spinner/spinner.component';
 
+// Selectors to access category states
+import {
+  selectCategoriesMap,
+  selectCategoriesIsLoading,
+} from '../../store/categories/category.selector';
+
+// Styled-components
 import { CategoryContainer, Title } from './category.styles';
 
-const Category = () => {
 
-  // useParams() is to get URL param
+// Our category component
+const Category = () => {
+  // To get params passed by the URL
   const { category } = useParams();
 
-  // get list of categories from Categories context
-  const { categoriesMap } = useContext(CategoriesContext);
+  // Access the categories map and categories loading states in Redux's store
+  const categoriesMap = useSelector(selectCategoriesMap);
+  const isLoading = useSelector(selectCategoriesIsLoading);
 
-  // default value of the product would be the category with the title matching with the current URL param
+  // products states to be passed a props to product card component
   const [products, setProducts] = useState(categoriesMap[category]);
 
-  // on mount, we set the product state as category that matches with our current URL param
+  // Whenever 'category' or 'categoriesMap' updates, update the products states thus update the product card on the page.
   useEffect(() => {
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
@@ -26,12 +38,16 @@ const Category = () => {
   return (
     <Fragment>
       <Title>{category.toUpperCase()}</Title>
-      <CategoryContainer>
-        {products &&
-          products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-      </CategoryContainer>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <CategoryContainer>
+          {products &&
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </CategoryContainer>
+      )}
     </Fragment>
   );
 };

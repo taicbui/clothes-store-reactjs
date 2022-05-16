@@ -1,34 +1,44 @@
-import { useContext} from 'react';
-
-// Import cart icon to use it as a component. This is how we normally use svg
+// Import svg picture as React component to use it.
 import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 
+// 'useSelector' hook is to access the Redux store's states
+// 'useDispatch' hook is to dispatch action to the reducers
+import { useDispatch, useSelector } from 'react-redux';
 
-// CartContext contains cartCount state (counts the number of items in cart) 
-import { CartContext } from '../../contexts/cart.context';
+// We will need 2 selector: selectCartCount and selectIsCartOpen
+import {
+  selectCartCount,
+  selectIsCartOpen,
+} from '../../store/cart/cart.selector';
 
-// Import styled-component
+
+// Action to open and close drop-down cart
+import { setIsCartOpen } from '../../store/cart/cart.action.js';
+
+// Styled-components
 import { CartIconContainer, ItemCount } from './cart-icon.styles';
 
 
 
-// Cart Icon component
+// Our Cart Icon component
 const CartIcon = () => {
+  const dispatch = useDispatch();
 
-  // Import cartCount state
-  const {cartCount} = useContext(CartContext);
+  // Get cart count states
+  const cartCount = useSelector(selectCartCount);
+
+  // Get cart open/close states
+  const isCartOpen = useSelector(selectIsCartOpen);
+
+  // Function to open/close drop-down cart
+  const toggleIsCartOpen = () => dispatch(setIsCartOpen(!isCartOpen));
 
   return (
-    <CartIconContainer>
+    <CartIconContainer onClick={toggleIsCartOpen}>
       <ShoppingIcon className='shopping-icon' />
-      {  
-        // If there is no item in cart, show nothing but the cart icon. If there is one or more items in cart, show <ItemCount>
-        (cartCount > 0) ? (<ItemCount>{cartCount}</ItemCount>) : null
-      }
+      <ItemCount>{cartCount}</ItemCount>
     </CartIconContainer>
   );
 };
 
-
-// Navigation will import this CartIcon component. CartIcon is located in Navigation bar
 export default CartIcon;

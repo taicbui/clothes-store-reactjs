@@ -1,22 +1,36 @@
-import { useContext, Fragment } from 'react';
+import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
-// Categories context contains list of categories fetched from Firestore
-import { CategoriesContext } from '../../contexts/categories.context';
+// Selectors to access categories states
+import {
+  selectCategoriesMap,
+  selectCategoriesIsLoading,
+} from '../../store/categories/category.selector';
 
-// A single category preview. We will display each category preview for each category
+// This component will contain multiple category preview
 import CategoryPreview from '../../components/category-preview/category-preview.component';
+import Spinner from '../../components/spinner/spinner.component';
 
 const CategoriesPreview = () => {
-  const { categoriesMap } = useContext(CategoriesContext);
+
+  // Selector to access categories map states
+  const categoriesMap = useSelector(selectCategoriesMap);
+
+  // Selector to access loading states
+  const isLoading = useSelector(selectCategoriesIsLoading);
 
   return (
     <Fragment>
-      {Object.keys(categoriesMap).map((title) => {
-        const products = categoriesMap[title];
-        return (
-          <CategoryPreview key={title} title={title} products={products} />
-        );
-      })}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        Object.keys(categoriesMap).map((title) => {
+          const products = categoriesMap[title];
+          return (
+            <CategoryPreview key={title} title={title} products={products} />
+          );
+        })
+      )}
     </Fragment>
   );
 };

@@ -38,13 +38,11 @@ const categories = [
 const Directory = () => {
   return (
     <DirectoryContainer>
-      {/* For every category, pass it as props to DirectoryItem component */}
       {categories.map((category) => (
-        <DirectoryItem key={category.id} category={category} />         // 'key' prop will help Reactjs to re-render only the item related to the change in states, instead of re-rendering the whole thing 
+        <DirectoryItem key={category.id} category={category} />
       ))}
     </DirectoryContainer>
   );
 };
-
 
 export default Directory;

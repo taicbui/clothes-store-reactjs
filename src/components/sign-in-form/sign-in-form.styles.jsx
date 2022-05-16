@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-
-// Style for sign-in container
 export const SignInContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,8 +10,6 @@ export const SignInContainer = styled.div`
   }
 `;
 
-
-// Style for button 'sign-in' container
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-between;

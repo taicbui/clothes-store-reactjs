@@ -1,34 +1,34 @@
-import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-// CartContext contains states related to cart. 
-import { CartContext } from '../../contexts/cart.context';
+// Selector to access items in cart
+import { selectCartItems } from '../../store/cart/cart.selector';
 
-// Button component
+// Action to be dispatched to add items to cart
+import { addItemToCart } from '../../store/cart/cart.action';
+
+// Button
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-// Import styled-class
+// Styled-components
 import {
-  ProductCardContainer,
+  ProductCartContainer,
   Footer,
   Name,
   Price,
 } from './product-card.styles';
 
 
-// ProductCard will be imported by and recieve prps from category-preview and category component
+// Our product card component
 const ProductCard = ({ product }) => {
-
-  // 3 types of information about the product we need: name, price and image
+  
   const { name, price, imageUrl } = product;
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
 
-  // State to add item to card
-  const { addItemToCart } = useContext(CartContext);
-
-  // Function to add item to card
-  const addProductToCart = () => addItemToCart(product);
+  const addProductToCart = () => dispatch(addItemToCart(cartItems, product));
 
   return (
-    <ProductCardContainer>
+    <ProductCartContainer>
       <img src={imageUrl} alt={`${name}`} />
       <Footer>
         <Name>{name}</Name>
@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
       >
         Add to card
       </Button>
-    </ProductCardContainer>
+    </ProductCartContainer>
   );
 };
 

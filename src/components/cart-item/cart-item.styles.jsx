@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-
-// Style for cart item on cart dropdown
 export const CartItemContainer = styled.div`
   width: 100%;
   display: flex;
@@ -13,8 +11,6 @@ export const CartItemContainer = styled.div`
   }
 `;
 
-
-// Style for cart item details on cart dropdown
 export const ItemDetails = styled.div`
   width: 70%;
   display: flex;

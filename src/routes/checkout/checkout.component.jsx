@@ -1,14 +1,17 @@
-import { useContext } from 'react';
-
-// CartContext will include all the items ready to checkout
-import { CartContext } from '../../contexts/cart.context';
+import { useSelector } from 'react-redux';
 
 
-// import checkout item component. Checkout components will include multiple checkout items
+// Selectors to access cart's states in Redux store
+import {
+  selectCartItems,
+  selectCartTotal,
+} from '../../store/cart/cart.selector';
+
+// This component will contain multiple 'CheckoutItem' components
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 
 
-// import styled-component
+// Styled-components
 import {
   CheckoutContainer,
   CheckoutHeader,
@@ -16,10 +19,12 @@ import {
   Total,
 } from './checkout.styles';
 
-const Checkout = () => {
 
-  // Our checkout will show cartItems and cartTotal details
-  const { cartItems, cartTotal } = useContext(CartContext);
+
+// Our checkout component
+const Checkout = () => {
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
 
   return (
     <CheckoutContainer>
@@ -40,7 +45,6 @@ const Checkout = () => {
           <span>Remove</span>
         </HeaderBlock>
       </CheckoutHeader>
-      {/* For reach cart item, we pass it as props to CheckoutItem component */}
       {cartItems.map((cartItem) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}

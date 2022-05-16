@@ -1,7 +1,4 @@
-// Import navigate for onClick event 
 import { useNavigate } from 'react-router-dom';
-
-// Import styled-component 
 import {
   BackgroundImage,
   Body,
@@ -9,11 +6,15 @@ import {
 } from './directory-item.styles';
 
 
-// DirectoryItem will be imported by Directory component
+
 const DirectoryItem = ({ category }) => {
+
+  // category prop is passed by directory component
   const { imageUrl, title, route } = category;
+
   const navigate = useNavigate();
 
+  // Go to product page when clicked
   const onNavigateHandler = () => navigate(route);
 
   return (

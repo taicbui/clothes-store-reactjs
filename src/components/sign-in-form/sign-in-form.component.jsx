@@ -1,70 +1,68 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-// Import Input form
+// form input and button component
 import FormInput from '../form-input/form-input.component';
-
-// Import button
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-
-// Import Firebase sign-in
-import {
-  signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup,
-} from '../../utils/firebase/firebase.utils';
-
-// Import styled-component
+// Styled-component
 import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
 
-// This object will be assigned as default value for formFields state
+// Action to sign in with email and with google
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from '../../store/user/user.action';
+
+
+// default field
 const defaultFormFields = {
   email: '',
   password: '',
 };
 
 
-// SignInForm will be imported and included by Authentication component
+ // Our sign-in component
 const SignInForm = () => {
+  const dispatch = useDispatch();
 
-  // Setup for formFields state
+  // formFields states are used to monitor user input and dispatch those input 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  // function to reset formFields to its default value
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-
-  // Sign in with Google function
+  // function to sign in with Google
+  // Redux saga will listen to this dispatch
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
 
 
-
-
-  // Action to take when we submit sign-in with email & password form
+  // function to sign in with email and password
+  // Redux saga will listen to this dispatch
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email, password));
       resetFormFields();
+
     } catch (error) {
       console.log('user sign in failed', error);
     }
   };
 
-
-  // Action to take when we type in sign-in input
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    // [name]: value is Computed property names and dynamic object property names
     setFormFields({ ...formFields, [name]: value });
   };
 
-
-  
   return (
     <SignInContainer>
       <h2>Already have an account?</h2>
