@@ -1,1 +1,1 @@
-## In phase 3, we add Redux and Redux Middleware (thunk, saga, logger,...) to the picture.
+## In phase 4, we add Stripe using severless function and migrate the whole app to typescript.
