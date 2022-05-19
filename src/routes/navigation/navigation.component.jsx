@@ -26,7 +26,6 @@ import {
 
 
 
-
 // Our component for nav bar
 const Navigation = () => {
   const dispatch = useDispatch();

@@ -1,3 +1,5 @@
+// This file will test the contracts between our app and firebase
+
 import firestoreAuth from 'firebase/auth';
 
 import {
@@ -26,6 +28,7 @@ jest.mock('firebase/auth', () => {
 });
 
 describe('firebase utils', () => {
+  
   test("signInWithGooglePopup to call firestoreAuth's signInWithPopup", () => {
     signInWithGooglePopup();
     expect(firestoreAuth.signInWithPopup).toHaveBeenCalled();
