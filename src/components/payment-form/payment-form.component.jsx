@@ -27,7 +27,7 @@ const PaymentForm = () => {
   const amount = useSelector(selectCartTotal);
   const currentUser = useSelector(selectCurrentUser);
 
-  // This state is to determine whether the payment is be processed. This is needed for testing 
+  // This state is to determine whether the payment is be processed. This is needed for isLoading prop 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
 
@@ -94,7 +94,7 @@ const PaymentForm = () => {
           // buttonType prop will determines the types of button displayed
           buttonType={BUTTON_TYPE_CLASSES.inverted}
 
-          // isLoading prop will be used in testing
+          // if isLoading is true, the button is disabled
           isLoading={isProcessingPayment}
         >
           Pay Now

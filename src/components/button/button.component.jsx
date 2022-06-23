@@ -7,14 +7,13 @@ import {
 
 
 
-// Components will import these to determine what kind of buttons they need.
+// Other components will import these to determine what kind of buttons they need.
 export const BUTTON_TYPE_CLASSES = {
   base: 'base',
   google: 'google-sign-in',
   inverted: 'inverted',
 };
 
-//a
 
 
 // Get whatever button when we pass its type to this function as param
@@ -28,9 +27,12 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) =>
 
 
 // This is what other components, that need buttons such as sign-in, will import this. This function will return the needed button
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({ children, buttonType, isLoading, ...otherProps }) => {
   const CustomButton = getButton(buttonType);
-  return <CustomButton {...otherProps}>{children}</CustomButton>;
+
+  if (isLoading){ return <CustomButton {...otherProps} disabled>{children}</CustomButton>; }
+  else {return <CustomButton {...otherProps}>{children}</CustomButton>;}
+
 };
 
 export default Button;
